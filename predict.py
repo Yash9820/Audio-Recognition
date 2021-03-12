@@ -1,9 +1,9 @@
 import numpy as np 
-import tensorflow as tf
-import keras
-from keras.models import load_model
+#import tensorflow as tf
+#import keras
+#from keras.models import load_model
 import librosa
-import pickle
+
 max_pad_len = 174
 num_rows = 40
 num_columns = 174
