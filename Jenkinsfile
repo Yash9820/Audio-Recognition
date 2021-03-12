@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'python -m pip install -r requirements.txt'
+                echo 'Build Done'
                 
             }
         }
