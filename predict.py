@@ -12,7 +12,7 @@ num_channels = 1
 
 # model loading code
 #loaded_model = pickle.load(open('model.pkl', 'rb'))
-model =load_model('models/full_model.h5')
+#model =load_model('models/full_model.h5')
 #loaded_model.summary()
 
 # Label map for your strings and number 
