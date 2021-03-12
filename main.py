@@ -12,7 +12,7 @@ from passlib.hash import sha256_crypt
 from flask_mysqldb import MySQL
 import MySQLdb.cursors 
 import json
-from keras.models import load_model
+
 import os
 from predict import predict
 
