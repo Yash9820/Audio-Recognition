@@ -5,14 +5,13 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'python -m pip install -r requirements.txt'
-                
                 echo 'Build Done'
                 
             }
         }
         stage('Test'){
             steps{
-                bat 'python test.py'
+                bat 'python main.py'
                 echo 'Test Done'
                 
             }
