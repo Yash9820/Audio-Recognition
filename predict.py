@@ -1,7 +1,7 @@
 import numpy as np 
-import tensorflow as tf
-import keras
-from keras.models import load_model
+#import tensorflow as tf
+#import keras
+#from keras.models import load_model
 import librosa
 
 max_pad_len = 174
@@ -12,7 +12,7 @@ num_channels = 1
 
 # model loading code
 #loaded_model = pickle.load(open('model.pkl', 'rb'))
-model =load_model('models/full_model.h5')
+#model =load_model('models/full_model.h5')
 #loaded_model.summary()
 
 # Label map for your strings and number 
