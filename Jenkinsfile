@@ -4,6 +4,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                script {
+                    properties([pipelineTriggers([pollSCM('')])])
+                }
                 bat 'python -m pip install -r requirements.txt'
                 echo 'Build Done'
                 
