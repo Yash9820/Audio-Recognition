@@ -10,6 +10,7 @@ Flask-WTF==0.14.3
 Jinja2==2.11.3
 joblib==1.0.1
 librosa==0.8.0
+keras==2.4.3
 mysql==0.0.2
 mysql-connector==2.2.9
 mysqlclient==2.0.3
