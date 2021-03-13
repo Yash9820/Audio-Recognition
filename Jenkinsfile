@@ -5,6 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 bat 'python -m pip install -r requirements.txt'
+                bat 'python -m pip install tensorflow'
+                bat 'python -m pip install keras'
                 echo 'Build Done'
                 
             }
