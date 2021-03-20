@@ -12,7 +12,7 @@ pipeline {
         }
         stage('unittest'){
             steps{
-                bat 'pytest --junitxml result.xml'
+                bat 'pytest --junitxml'
             }
         }
         stage('Test'){
