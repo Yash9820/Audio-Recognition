@@ -8,10 +8,10 @@ class TestHello(unittest.TestCase):
         rv = self.app.get('/register')
         self.assertEqual(rv.status, '200 OK')
         self.assertEqual(rv.data, b'Done\n')
-     def test_login(self):
+    def test_login(self):
         rv = self.app.get('/login')
         self.assertEqual(rv.status, '200 OK')
-      def test_analysis(self):
+    def test_analysis(self):
         rv = self.app.get('/analysis')
         self.assertEqual(rv.status, '200 OK')
 if __name__ == '__main__':
