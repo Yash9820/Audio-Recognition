@@ -17,6 +17,9 @@ pipeline {
                 echo 'Test Done'
                 
             }
+            post {
+                always {junit 'test-reports/*.xml'}
+            }
         }
     }
 }
