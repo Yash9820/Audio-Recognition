@@ -10,7 +10,11 @@ pipeline {
                 
             }
         }
-       
+        stage('unittest'){
+            steps{
+                bat 'pytest --junitxml result.xml'
+            }
+        }
         stage('Test'){
             steps{
                 bat 'python main.py'
