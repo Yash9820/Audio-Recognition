@@ -5,7 +5,7 @@ class TestHello(unittest.TestCase):
         app.testing = True
         self.app = app.test_client()
     def test_register(self):
-        rv = self.app.get('/register')
+        rv = self.app.get('/')
         self.assertEqual(rv.status, '200 OK')
         #self.assertEqual(rv.data, b'Done\n')
     def test_login(self):
