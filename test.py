@@ -7,6 +7,6 @@ class TestHello(unittest.TestCase):
     def test_register(self):
         rv = self.app.get('/register')
         self.assertEqual(rv.status, '200 OK')
-        #self.assertEqual(rv.data, b'Hello World!\n')
+        self.assertEqual(rv.data, b'Done\n')
 if __name__ == '__main__':
     unittest.main()
