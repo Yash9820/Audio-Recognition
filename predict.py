@@ -4,6 +4,8 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.models import load_model
 import librosa
+from matplotlib import pyplot as plt
+import struct
 
 max_pad_len = 174
 num_rows = 40
@@ -42,6 +44,10 @@ def predict(path):
     amplitude=amplitude.reshape(1, num_rows, num_columns, num_channels)
     # make predictions using model
     predictions = model.predict(amplitude)
+    audio, sample_rate = librosa.load(path, res_type='kaiser_fast') 
+    mfccs = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
+    plt.figure(figsize=(15, 7))
+    librosa.display.specshow(mfccs, sr=sample_rate, x_axis='time')
 
     # get index of the highest probability
     idx = np.argmax(predictions, axis=1).tolist()[0]
