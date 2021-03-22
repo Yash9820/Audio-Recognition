@@ -4,6 +4,9 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.models import load_model
 import librosa.display
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import struct
 
