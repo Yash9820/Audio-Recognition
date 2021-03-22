@@ -13,6 +13,9 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors 
 import json
 import struct
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import librosa.display
 import os
