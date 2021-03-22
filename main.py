@@ -12,12 +12,33 @@ from passlib.hash import sha256_crypt
 from flask_mysqldb import MySQL
 import MySQLdb.cursors 
 import json
-
+import struct
+from matplotlib import pyplot as plt
 import os
 from predict import predict
 
-app = Flask(__name__)
+class WavFileHelper():
+    
+    def read_file_properties(self, file):
+        wave_file = open(file,"rb")
+        
+        riff = wave_file.read(12)
+        fmt = wave_file.read(36)
+        
+        num_channels_string = fmt[10:12]
+        num_channels = struct.unpack('<H', num_channels_string)[0]
 
+        sample_rate_string = fmt[12:16]
+        sample_rate = struct.unpack("<I",sample_rate_string)[0]
+        
+        bit_depth_string = fmt[22:24]
+        bit_depth = struct.unpack("<H",bit_depth_string)[0]
+
+        return (num_channels,sample_rate,bit_depth)
+
+wavfilehelper = WavFileHelper()
+app = Flask(__name__)
+audiodata = []
 
 app.config['SECRET_KEY'] = '4d5482dc5b0411eb983b3024a9431551'
 
@@ -96,8 +117,14 @@ def upload():
 		file.save(os.path.join("uploads",file.filename))
 		type_sound=predict(os.path.join("uploads",file.filename))
 		print(type_sound)
+		data = wavfilehelper.read_file_properties((os.path.join("uploads",file.filename)))
+		audiodata.append(data)
+		audiodf = pd.DataFrame(audiodata, columns=['num_channels','sample_rate','bit_depth'])
 		#return "Result:"+type_sound
-		return render_template('analysis.html', prediction_text='Sound  is:-{}'.format(type_sound))
+		plt.savefig('static/images/plot.png')
+		#return "Result:"+type_sound
+		return render_template('analysis.html',url='/static/images/plot.png', prediction_text='Sound  Detected:-\t{}'.format(type_sound),abc='\nSound  Properties:-',xyz='\nMFCCs spectrogram:-',tables=[audiodf.to_html(classes='data', header="true", index=False)])
+
 	return render_template('analysis.html')
 
 	
