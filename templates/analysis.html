@@ -63,6 +63,14 @@
 </br>
 </br>
 <center><h1><b>{{prediction_text}}</b></h1></center>
+<center><h1><b>{{abc}}</b></h1></center></br>
+<center>
+{% for table in tables %}
+            {{ table|safe }}
+{% endfor %}
+</center>
+</br><center><h1><b>{{xyz}}</b></h1></center>
+<center></br><img src={{url}}  height="400px" width="900px">
 </br>
 </br>
 </br>
