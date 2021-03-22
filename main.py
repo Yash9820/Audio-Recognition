@@ -13,7 +13,7 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors 
 import json
 import struct
-from matplotlib import pyplot as plt
+from matplotlib.pyplot as plt
 import librosa.display
 import os
 import pandas as pd
