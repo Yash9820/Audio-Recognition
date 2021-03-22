@@ -3,7 +3,7 @@ import tensorflow as tf
 #import tensorflow.contrib.keras as keras
 from tensorflow import keras
 from keras.models import load_model
-import librosa
+import librosa.display
 from matplotlib import pyplot as plt
 import struct
 
