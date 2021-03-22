@@ -4,7 +4,7 @@ import tensorflow as tf
 from tensorflow import keras
 from keras.models import load_model
 import librosa.display
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import struct
 
 max_pad_len = 174
