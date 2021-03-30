@@ -11,9 +11,18 @@ class TestHello(unittest.TestCase):
     def test_login(self):
         rv = self.app.get('/login')
         self.assertEqual(rv.status, '200 OK')
-                        
+    def test_index1(self):
+        rv = self.app.get('/index1')
+        self.assertEqual(rv.status, '200 OK')
+    def test_analysis(self):
+        rv = self.app.get('/analysis')
+        self.assertEqual(rv.status, '200 OK')
+    
     def test_upload(self):
         rv = self.app.get('/analysis')
+        self.assertEqual(rv.status, '200 OK')
+    def test_logout(self):
+        rv = self.app.get('/logout')
         self.assertEqual(rv.status, '200 OK')
 if __name__ == '__main__':
     unittest.main()
