@@ -15,9 +15,7 @@ class TestHello(unittest.TestCase):
     def test_upload(self):
         rv = self.app.get('/login')
         self.assertEqual(rv.status, '200 OK')
-    def test_logout(self):
-        rv = self.app.get('/login')
-        self.assertEqual(rv.status, '200 OK')
+    
     
 if __name__ == '__main__':
     unittest.main()
