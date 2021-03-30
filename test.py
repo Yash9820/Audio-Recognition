@@ -12,9 +12,7 @@ class TestHello(unittest.TestCase):
     def test_login(self):
         rv = self.app.get('/login')
         self.assertEqual(rv.status, '200 OK')
-    def test_upload():
-        rv = self.app.get('/login')
-        self.assertEqual(rv.status, '200 OK')
+    
     
     
 if __name__ == '__main__':
