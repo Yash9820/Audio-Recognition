@@ -11,6 +11,7 @@ class TestHello(unittest.TestCase):
     def test_login(self):
         rv = self.app.get('/login')
         self.assertEqual(rv.status, '200 OK')
+                        
     def test_upload(self):
         rv = self.app.get('/analysis')
         self.assertEqual(rv.status, '200 OK')
