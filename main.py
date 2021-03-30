@@ -1,26 +1,21 @@
-from flask import Flask, render_template, flash,url_for,redirect,request,session
+from flask import Flask, render_template, flash,url_for,redirect,request,session,g
 from flask_login import login_user , current_user, logout_user
-
-#import sounddevice as sd 
-#from playsound import playsound
 from forms import RegistrationForm,LoginForm
-#from scipy.io.wavfile import write 
-#import wavio as wv 
 from flask_mysqldb import MySQL
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 from flask_mysqldb import MySQL
-import MySQLdb.cursors 
+import MySQLdb.cursors 	
+from werkzeug.utils import secure_filename
+from matplotlib import pyplot as plt
 import json
-import struct
-import matplotlib
-matplotlib.use('Agg')
-
-import matplotlib.pyplot as plt
 import librosa.display
+from keras.models import load_model
 import os
-import pandas as pd
 from predict import predict
+from predict import extract_features
+import struct
+import pandas as pd
 
 class WavFileHelper():
     
@@ -42,8 +37,12 @@ class WavFileHelper():
         return (num_channels,sample_rate,bit_depth)
 
 wavfilehelper = WavFileHelper()
+
+ALLOWED_EXTENSIONS = {'wav'}
+
 app = Flask(__name__)
 audiodata = []
+
 
 app.config['SECRET_KEY'] = '4d5482dc5b0411eb983b3024a9431551'
 
@@ -55,6 +54,9 @@ app.config['MYSQL_DB'] = 'audio-recognition'
 mysql = MySQL(app) 
 db = SQLAlchemy(app)
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 class Signup(db.Model):
 	username = db.Column(db.String(80),	unique=False,	nullable=False)
@@ -107,36 +109,82 @@ def login():
 
 @app.route("/index1")
 def index1():
-    return render_template('index1.html')
+	if g.email:
+		return render_template('index1.html')
+	return redirect(url_for('login'))
 
-
-    
 @app.route("/analysis")
-def analysis():  
-    return render_template('analysis.html')
+def analysis():
+	if g.email:  
+		return render_template('analysis.html')
+	return redirect(url_for('login'))
+
+ALLOWED_EXTENSIONS = set(['wav'])
+
+def allowed_file(filename):
+	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route("/analysis",methods=['GET', 'POST'])
 def upload():
-	if request.method=='POST':
-		file=request.files["file"]
-		file.save(os.path.join("uploads",file.filename))
-		type_sound=predict(os.path.join("uploads",file.filename))
-		print(type_sound)
-		data = wavfilehelper.read_file_properties((os.path.join("uploads",file.filename)))
-		audiodata.append(data)
-		audiodf = pd.DataFrame(audiodata, columns=['num_channels','sample_rate','bit_depth'])
-		#return "Result:"+type_sound
-		plt.savefig('static/images/plot.png')
-		#return "Result:"+type_sound
-		return render_template('analysis.html',url='/static/images/plot.png', prediction_text='Sound  Detected:-\t{}'.format(type_sound),abc='\nSound  Properties:-',xyz='\nMFCCs spectrogram:-',tables=[audiodf.to_html(classes='data', header="true", index=False)])
+	if g.email:
+		if request.method=='POST':
+			file=request.files["file"]
+			if file and allowed_file(file.filename):
+				file.save(os.path.join("uploads",file.filename))
+				type_sound=predict(os.path.join("uploads",file.filename))
+				print(type_sound)
+				data = wavfilehelper.read_file_properties((os.path.join("uploads",file.filename)))
+				audiodata.append(data)
+				audiodf = pd.DataFrame(audiodata, columns=['num_channels','sample_rate','bit_depth'])
+				#return "Result:"+type_sound
+				plt.savefig('static/images/plot.png')
+				#return "Result:"+type_sound
+				return render_template('analysis.html',url='/static/images/plot.png', prediction_text='Sound  Detected:-\t{}'.format(type_sound),abc='\nSound  Properties:-',xyz='\nMFCCs spectrogram:-',tables=[audiodf.to_html(classes='data', header="true", index=False)])
+			else:
+				flash('Invalid File') 
+		return render_template('analysis.html')
+	return redirect(url_for('login'))
 
-	return render_template('analysis.html')
 
+
+
+
+
+		
+
+
+@app.before_request
+def before_request():
+	g.email=None
+	if 'email' in session:
+		g.email=session['email']
+
+@app.route("/logout")
+def logout():
+	session.pop('loggedin', None)
+	session.pop('email', None)
+	session.clear()
+	return redirect(url_for('login'))
+
+	
+	
+	
+	
+    
+
+
+
+
+
+
+	
 	
 
 
 			
 			
-	
+if __name__ == '__main__':
+	app.debug = True
+	app.run()
 
-app.run(debug=True)
