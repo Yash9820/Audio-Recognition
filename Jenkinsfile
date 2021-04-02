@@ -11,7 +11,7 @@ pipeline {
             }
         }
        
-        stage('TestCase'){
+        stage('Run'){
             steps{
                 bat 'python test.py'
                 echo 'Test Done'
