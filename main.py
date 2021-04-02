@@ -148,8 +148,8 @@ def upload():
 
 @app.errorhandler(500)
 def page_not_found(e):
-		flash("Sound not detected Properly")
-		return redirect(url_for('analysis'))
+	flash("Sound not detected Properly")
+	return redirect(url_for('analysis'))
 
 
 
