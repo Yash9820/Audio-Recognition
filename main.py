@@ -146,6 +146,11 @@ def upload():
 		return render_template('analysis.html')
 	return redirect(url_for('login'))
 
+@app.errorhandler(500)
+def page_not_found(e):
+		flash("Sound not detected Properly")
+		return redirect(url_for('analysis'))
+
 
 
 
