@@ -137,6 +137,7 @@ def upload():
 				data = wavfilehelper.read_file_properties((os.path.join("uploads",file.filename)))
 				audiodata.append(data)
 				audiodf = pd.DataFrame(audiodata, columns=['num_channels','sample_rate','bit_depth'])
+				element=audiodata.clear()
 				#return "Result:"+type_sound
 				plt.savefig('static/images/plot.png')
 				#return "Result:"+type_sound
