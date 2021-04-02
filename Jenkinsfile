@@ -19,12 +19,7 @@ pipeline {
             }
            
         }
-                stage('Run'){
-                     steps{
-                        bat 'python main.py'
-                        echo 'Success'
-            }
-                }
+                
 
     }
 }
