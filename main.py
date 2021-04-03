@@ -149,7 +149,7 @@ def upload():
 
 @app.errorhandler(500)
 def page_not_found(e):
-	flash("Sound not detected Properly")
+	flash("The sound cannot be reshaped for model, please try another file")
 	return redirect(url_for('analysis'))
 
 
