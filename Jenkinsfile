@@ -11,7 +11,7 @@ pipeline {
             }
         }
        
-        stage('Run'){
+        stage('Test'){
             steps{
                 bat 'python test.py'
                 echo 'Test Done'
@@ -19,7 +19,14 @@ pipeline {
             }
            
         }
+             stage('Run'){
+            steps{
+                bat 'python main.py'
+                echo 'Test Done'
                 
+            }
+           
+        }    
 
     }
 }
